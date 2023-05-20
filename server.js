@@ -4,6 +4,16 @@ import fs from 'fs'
 // 세션ID 정보를 담을 객체 생성
 const sessions = {};
 
+function IsSessionChecker(req) {
+  const cookies = req.headers.cookie;
+  if (cookies && sessions[cookies]) {
+    // 세션 데이터가 있으면 인증된 사용자이다.
+    return true;
+  } else {
+    // 세션 데이터가 없으면 인증이 안된 사용자이다.
+    return false;
+  }
+}
 
 const server=http.createServer((req,res)=>{
   if(req.method === 'GET') {
